@@ -32,15 +32,15 @@ export async function signup(formData: FormData) {
 			email,
 			password: hashedPassword,
 		})
-		// saveを実行するとDBに反映される
-		await userRepository.save(newUser)
-
-		// ここでトップページに戻る処理redirect
-		redirect('/')
+		// saveはDBに登録したデータを返してくれるので
+		// コンソールには登録されたユーザーの情報が表示される
+		console.log(await userRepository.save(newUser))
 	} catch (e) {
 		console.error(e)
 		return { error: 'ユーザー登録中にエラーが発生しました' }
 	}
+	//tryとは関係ない処理なので外に出し、すべての処理がうまくいってからリダイレクトさせる
+	redirect('/')
 }
 
 // export async function login(formData: FormData) {
